@@ -1,5 +1,5 @@
-#orchestrator-releases
-#To install the binary in linux
+### orchestrator-releases
+## To install the binary in linux
 1. unzip CassiaInstallationsmainV1.1.4.zip
 2. cd CassiaInstallationsmainV1.1.4/CassiaInstallationsmainV1.1.4
 3. "ls" to view the files and folders present in the Folder
@@ -12,35 +12,37 @@
 10. To view the errors recorded, change directory to /opt/go-ble-orchestrator then : grep -a "<required-keywords(case-sensititve)>" app.log
 11. To check for Mosquitto MQTT : sudo systemctl status mosquitto.service
 12. To check for mosquitto.conf : cd /etc/mosquitto/mosquitto.conf
-#Uninstall services
+## Uninstall services
 1. In the directory of CassiaInstallationsmainV1.1.4
 2. chmod +x DeviceManager_Uninstall.sh
 3. sudo ./DeviceManager_Uninstall.sh
 
-#DEBUG
-1. mosquitto.conf should look like the below | View using : sudo cat /etc/mosquitto/mosquitto.conf or sudo nano /etc/mosquitto/mosquitto.conf
-  # Unified BLE Orchestrator - Auto Generated Config
-  pid_file /run/mosquitto/mosquitto.pid
-  persistence true
-  persistence_location /var/lib/mosquitto/
-  log_dest file /var/log/mosquitto/mosquitto.log
-  
-  # Port 1883 for MQTT
-  listener 1883
-  allow_anonymous true
-2. Check for MQTT data by listening:
-  (if error comes then : sudo apt install mosquitto-clients)
-  mosquitto_sub -t "<Topic>"
-  mosquitto_sub -t "#" -> super topic subscribes to all the topics
-  mosquitto_sub -t "ble/router/command"
-  mosquittto_sub -t "ble/router/status"
-3. If no mqtt data is seen, then update the firewall rules:
+## DEBUG
+# 1. mosquitto.conf should look like the below 
+  View using : sudo cat /etc/mosquitto/mosquitto.conf or sudo nano /etc/mosquitto/mosquitto.conf
+    mosquitto.conf : 
+      #Unified BLE Orchestrator - Auto Generated Config
+      pid_file /run/mosquitto/mosquitto.pid
+      persistence true
+      persistence_location /var/lib/mosquitto/
+      log_dest file /var/log/mosquitto/mosquitto.log
+      
+      #Port 1883 for MQTT
+      listener 1883
+      allow_anonymous true
+# 2. Check for MQTT data by listening:
+    (if error comes then : sudo apt install mosquitto-clients)
+    mosquitto_sub -t "<Topic>"
+    mosquitto_sub -t "#" -> super topic subscribes to all the topics
+    mosquitto_sub -t "ble/router/command"
+    mosquittto_sub -t "ble/router/status"
+# 3. If no mqtt data is seen, then update the firewall rules:
       sudo ufw allow 1883/tcp -> Mosquitto MQTT
       sudo ufw allow 8080/tcp -> ESP32 Dashboard
       sudo ufw allow 8083/tcp -> DeviceManager Dashboard
-  Refresh the rules
+  # Refresh the rules
       sudo ufw reload
-Other Helpfull commands:
-sudo systemctl restart <service-name> 
-sudo systemctl stop <service-name>
-sudo systemctl start <service-name>
+## Other Helpfull commands:
+  sudo systemctl restart <service-name> 
+  sudo systemctl stop <service-name>
+  sudo systemctl start <service-name>
